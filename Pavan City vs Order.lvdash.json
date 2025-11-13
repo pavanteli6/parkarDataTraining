@@ -1,0 +1,100 @@
+{
+  "datasets": [
+    {
+      "name": "a925fbe7",
+      "displayName": "Customer Order Totals Grouped By State And City",
+      "queryLines": [
+        "SELECT\r\n",
+        "  `state`,\r\n",
+        "  `city`,\r\n",
+        "  SUM(`total_orders`) AS total_orders\r\n",
+        "FROM\r\n",
+        "  `circuitbox_pavan`.`landingschema`.`gold_customer_order_summary`\r\n",
+        "WHERE\r\n",
+        "  `state` IS NOT NULL\r\n",
+        "  AND `city` IS NOT NULL\r\n",
+        "GROUP BY\r\n",
+        "  `state`,\r\n",
+        "  `city`\r\n",
+        "ORDER BY\r\n",
+        "  `state`,\r\n",
+        "  `city`"
+      ],
+      "catalog": "newpavancatalog",
+      "schema": "gold"
+    }
+  ],
+  "pages": [
+    {
+      "name": "4c48c4bf",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "total-orders-by-state",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a925fbe7",
+                  "fields": [
+                    {
+                      "name": "state",
+                      "expression": "`state`"
+                    },
+                    {
+                      "name": "sum(total_orders)",
+                      "expression": "SUM(`total_orders`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "state",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_orders)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "frame": {
+                "title": "Total Orders by State",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 0,
+            "width": 5,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "genieSpace": {
+      "isEnabled": true
+    },
+    "applyModeEnabled": false
+  }
+}
